@@ -1,6 +1,6 @@
 # MiniFMM
 
-This mini-app implements the Fast Multipole Method to solvet the Laplace equation in 3D using spherical coordinates. The method outputs the gravitational acceleration and potential for all particles in the input.
+This mini-app implements the Fast Multipole Method to solve the Laplace equation in 3D using spherical coordinates. The method outputs the gravitational acceleration and potential for all particles in the input.
 
 It was originally designed as a benchmark for task-parallel frameworks/implementations. The mini-app is suited to task-parallelism as it uses the Dual Tree-Traversal method to either approximate or calculate directly the particle forces in a system.  
 
@@ -14,7 +14,7 @@ Current implementations:
 
 Build using Makefile in each directory. See READMEs in each directory for additional details.
 
-The Makfiles will first use all the source files in the current directory, then any missing source files will be copied from the ``ref`` directory. (Except for compiling ``ref``)
+The Makefiles will first use all the source files in the current directory, then any missing source files will be copied from the ``ref`` directory. (Except for compiling ``ref``)
 
 Set the COMPILER environment variable to either GNU, Intel, Cray, or Clang to enable the appropriate compiler flags.
 
@@ -26,6 +26,8 @@ Other enviroment variables:
 **As this is an approximate method, the last two lines print out the error of the gravational potential and acceleration. These values should typically be in the order of 10^-3 to 10^-7.**
 
 ## Input
+
+Run with ``-i`` flag, located in ``input`` folder.
 
 Measured on 22-core dual socket Intel Skylake /w HT (44 cores, 88 threads). Intel 2018 compiler and ``omp`` implementation.
 
@@ -48,9 +50,9 @@ Measured on 22-core dual socket Intel Skylake /w HT (44 cores, 88 threads). Inte
 | m     | Number of samples used to verify solution                                                            |
 | i     | Input file                                                                                           |
 
-Setting the ``c`` value too low will reduce the amount of work per task but will decrease the overall size of nodes (cells) which allows for more approximaiton of forces. 
+Setting the ``c`` value too low will reduce the amount of work per task but will decrease the overall size of nodes (cells) which allows for more approximations of forces. 
 
-Theta (``e``) is the ratio of the current node (cells) size to the distance to the source node under consideration, increasing this will decrease accuracy and allow for more approximations.
+Theta (``e``) is the ratio of the current node's (cell's) size and the distance to the source node under consideration, increasing this will decrease accuracy and allow for more approximations.
 
 The number of terms (``t``) determines time complexity of approximating forces.
 
