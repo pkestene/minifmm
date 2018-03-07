@@ -9,6 +9,8 @@ Current implementations:
 - OpenMP (using locks, atomics, and task dependencies)
 - TBB
 - CILK
+- CUDA
+- Kokkos (CPU and GPU)
 
 ## Usage
 
