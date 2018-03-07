@@ -20,3 +20,8 @@
 #define TYPE_CEXP(x) cexpf(x)
 #define TYPE_ABS(x) fabsf(x)
 #define TYPE_CONJ(x) conjf(x)
+
+#ifdef __cplusplus
+#undef I
+#define I (CMPLX(0.0f, 1.0f))
+#endif
