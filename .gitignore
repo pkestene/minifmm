@@ -37,3 +37,4 @@ fmm
 fmm-*
 
 *.pbs
+.ccls-cache
