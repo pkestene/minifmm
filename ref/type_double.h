@@ -1,16 +1,16 @@
 #pragma once
 
 #include <float.h>
-#include <complex.h>
+#include <complex>
 #include <math.h>
 
-#define TYPE double 
+using TYPE=double; 
+using TYPE_COMPLEX=std::complex<double>;
 #define TYPE_MAX DBL_MAX
 #define TYPE_ONE 1.0
 #define TYPE_EPS 5.0e-8
 #define TYPE_SQRT(x) sqrt(x)
 #define TYPE_ZERO 0.0
-#define TYPE_COMPLEX double _Complex
 #define TYPE_TWO 2.0
 #define TYPE_SIN(x) sin(x)
 #define TYPE_COS(x) cos(x)
@@ -21,7 +21,3 @@
 #define TYPE_ABS(x) fabs(x)
 #define TYPE_CONJ(x) conj(x)
 
-#ifdef __cplusplus
-#undef I
-#define I (CMPLX(0.0, 1.0))
-#endif

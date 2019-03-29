@@ -11,7 +11,7 @@ endif
 
 ARCH=native
 
-COMPILER_GNU=gcc
+COMPILER_GNU=g++
 COMPILER_INTEL=icc
 COMPILER_CLANG=clang
 COMPILER_CRAY=cc
@@ -42,7 +42,7 @@ endif
 LIBS += -lm
 
 HEADERS = $(wildcard *.h)
-OBJECTS=$(patsubst %.c, %.o, $(wildcard *.c))
+OBJECTS=$(patsubst %.cpp, %.o, $(wildcard *.c))
 
 default: $(TARGET)
 

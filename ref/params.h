@@ -4,7 +4,7 @@
 
 struct t_node;
 
-typedef struct 
+struct t_fmm_params 
 {
     struct t_node* root;
     TYPE* points;
@@ -27,5 +27,5 @@ typedef struct
 
     TYPE_COMPLEX* inner_factors;
     TYPE_COMPLEX* outer_factors;
-} t_fmm_params;
+};
 
