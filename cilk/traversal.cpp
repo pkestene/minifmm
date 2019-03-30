@@ -68,21 +68,21 @@ void calc_local_expansions(t_fmm_params* params)
 
 void perform_fmm(t_fmm_params* params)
 {
-    t_timer timer; 
+    Timer timer; 
     
-    start(&timer);
+    timer.start();
     calc_multipoles_at_nodes(params);
-    stop(&timer);
+    timer.stop();
     printf("Performed upward tree pass in %fs\n", timer.elapsed);
 
-    start(&timer);
+    timer.start();
     dual_tree_traversal(params);
-    stop(&timer);
+    timer.stop();
     printf("Performed dual tree traversal in %fs\n", timer.elapsed);
 
-    start(&timer);
+    timer.start();
     calc_local_expansions(params);
-    stop(&timer);
+    timer.stop();
     
     printf("Performed downward tree pass in %fs\n", timer.elapsed);
 }

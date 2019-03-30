@@ -17,10 +17,10 @@ int main(int argc, char** argv)
     initialise(argc, argv, &params);
 
     printf(SEPERATOR);
-    t_timer timer;
-    start(&timer);
+    Timer timer;
+    timer.start();
     perform_fmm(&params);
-    stop(&timer);
+    timer.stop();
     printf(SEPERATOR);
     printf("Total elapsed FMM time = %f\n", timer.elapsed);
 

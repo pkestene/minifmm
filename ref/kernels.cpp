@@ -8,7 +8,7 @@
 #include "kernels.h"
 #include "spharm.h"
 
-    static inline
+static inline
 void cart_to_sph(TYPE x, TYPE y, TYPE z, TYPE* pr, TYPE* ptheta, TYPE* pphi)
 {
     *pr = TYPE_SQRT(x*x+y*y+z*z);
@@ -16,7 +16,7 @@ void cart_to_sph(TYPE x, TYPE y, TYPE z, TYPE* pr, TYPE* ptheta, TYPE* pphi)
     *pphi = TYPE_ATAN2(y, x);
 }
 
-    static inline
+static inline
 void sph_to_cart(TYPE r, TYPE theta, TYPE phi, TYPE*x, TYPE* y, TYPE* z)
 {
     *x = r*TYPE_SIN(theta)*TYPE_COS(phi);
@@ -24,7 +24,7 @@ void sph_to_cart(TYPE r, TYPE theta, TYPE phi, TYPE*x, TYPE* y, TYPE* z)
     *z = r*TYPE_COS(theta);
 }
 
-    static inline
+static inline
 void sph_unit_to_cart_unit(TYPE r, TYPE theta, TYPE phi, TYPE grad_r, TYPE grad_theta, TYPE grad_phi,
         TYPE* x, TYPE* y, TYPE* z)
 {
@@ -34,7 +34,7 @@ void sph_unit_to_cart_unit(TYPE r, TYPE theta, TYPE phi, TYPE grad_r, TYPE grad_
 }
 
 // computes I^n
-    static inline
+static inline
 TYPE_COMPLEX ipow(int n)
 {
     TYPE_COMPLEX i;
@@ -286,17 +286,17 @@ void l2p(t_fmm_params* params, t_node* node)
         for (int n = 0; n < num_terms; ++n)
         {
             int m = 0;
-            pot += creal(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]);
-            rsum += (TYPE)n*creal(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]);
-            thetasum += creal(node->L[S_IDX(n,m)]*inner_deriv[S_IDX(n,m)]);
-            phisum += (TYPE)m*creal(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]*I);
+            pot += std::real(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]);
+            rsum += (TYPE)n*std::real(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]);
+            thetasum += std::real(node->L[S_IDX(n,m)]*inner_deriv[S_IDX(n,m)]);
+            phisum += (TYPE)m*std::real(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]*I);
             for (int m = 1; m <= n; ++m)
             {
-                // TODO change creal, cimag functions to type agnostic
-                pot         += 2.0*creal(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]);
-                rsum        += 2.0*(TYPE)n*creal(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]);
-                thetasum    += 2.0*creal(node->L[S_IDX(n,m)]*inner_deriv[S_IDX(n,m)]);
-                phisum      += 2.0*(TYPE)m*creal(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]*I);
+                // TODO change std::real, cimag functions to type agnostic
+                pot         += 2.0*std::real(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]);
+                rsum        += 2.0*(TYPE)n*std::real(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]);
+                thetasum    += 2.0*std::real(node->L[S_IDX(n,m)]*inner_deriv[S_IDX(n,m)]);
+                phisum      += 2.0*(TYPE)m*std::real(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]*I);
             }
         }
         TYPE inv_r = TYPE_ONE/r;
@@ -337,16 +337,16 @@ void m2p(t_fmm_params* params, t_node* target, t_node* source)
         for (int n = 0; n < num_terms; ++n)
         {
             int m = 0;
-            pot         += creal(outer[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
-            rsum        += (TYPE)-(n+1)*creal(outer[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
-            thetasum    += creal(outer_deriv[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
-            phisum      += (TYPE)m*creal(outer[S_IDX(n,-m)]*I*source->M[S_IDX(n,m)]);
+            pot         += std::real(outer[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
+            rsum        += (TYPE)-(n+1)*std::real(outer[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
+            thetasum    += std::real(outer_deriv[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
+            phisum      += (TYPE)m*std::real(outer[S_IDX(n,-m)]*I*source->M[S_IDX(n,m)]);
             for (m = 1; m <= n; ++m)
             {
-                pot         += 2.0*creal(outer[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
-                rsum        += 2.0*(TYPE)-(n+1)*creal(outer[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
-                thetasum    += 2.0*creal(outer_deriv[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
-                phisum      += 2.0*(TYPE)m*creal(outer[S_IDX(n,-m)]*I*source->M[S_IDX(n,m)]);
+                pot         += 2.0*std::real(outer[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
+                rsum        += 2.0*(TYPE)-(n+1)*std::real(outer[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
+                thetasum    += 2.0*std::real(outer_deriv[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
+                phisum      += 2.0*(TYPE)m*std::real(outer[S_IDX(n,-m)]*I*source->M[S_IDX(n,m)]);
             }
         }
         rsum *= TYPE_ONE/r;

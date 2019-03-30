@@ -6,7 +6,7 @@ struct t_node;
 
 struct t_fmm_params 
 {
-    struct t_node* root;
+    t_node* root;
     TYPE* points;
     TYPE* weights;
     TYPE* points_ordered;

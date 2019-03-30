@@ -2,7 +2,7 @@
 
 #include <float.h>
 #include <complex>
-#include <math.h>
+#include <cmath>
 
 using TYPE=float; 
 using TYPE_COMPLEX=std::complex<float>;
@@ -12,12 +12,12 @@ using TYPE_COMPLEX=std::complex<float>;
 #define TYPE_SQRT(x) sqrtf(x)
 #define TYPE_ZERO 0.0f
 #define TYPE_TWO 2.0f
-#define TYPE_SIN(x) sinf(x)
-#define TYPE_COS(x) cosf(x)
-#define TYPE_ATAN2(x,y) atan2f(x,y)
-#define TYPE_ACOS(x) acosf(x)
-#define TYPE_CPOW(x,y) cpowf(x,y)
-#define TYPE_CEXP(x) cexpf(x)
-#define TYPE_ABS(x) fabsf(x)
-#define TYPE_CONJ(x) conjf(x)
+#define TYPE_SIN(x) std::sin(x)
+#define TYPE_COS(x) std::cos(x)
+#define TYPE_ATAN2(x,y) std::atan2(x,y)
+#define TYPE_ACOS(x) std::acos(x)
+#define TYPE_CPOW(x,y) std::pow(x,y)
+#define TYPE_CEXP(x) std::exp(x)
+#define TYPE_ABS(x) std::abs(x)
+#define TYPE_CONJ(x) std::conj(x)
 

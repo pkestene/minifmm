@@ -12,15 +12,15 @@ endif
 ARCH=native
 
 COMPILER_GNU=g++
-COMPILER_INTEL=icc
-COMPILER_CLANG=clang
-COMPILER_CRAY=cc
+COMPILER_INTEL=icpc
+COMPILER_CLANG=clang++
+COMPILER_CRAY=CC
 CC=$(COMPILER_$(COMPILER))
 
-FLAGS_GNU = -O3 -std=gnu99 -Wall -march=$(ARCH)
-FLAGS_INTEL = -O3 -std=gnu99 -Wall -x$(ARCH)
+FLAGS_GNU = -O3  -Wall -march=$(ARCH)
+FLAGS_INTEL = -O3  -Wall -x$(ARCH)
 FLAGS_CRAY = -O3
-FLAGS_CLANG = -O3 -std=gnu99
+FLAGS_CLANG = -O3
 CFLAGS = $(FLAGS_$(COMPILER))
 
 LINKER_OPTS_GNU = -Wall
@@ -42,12 +42,15 @@ endif
 LIBS += -lm
 
 HEADERS = $(wildcard *.h)
-OBJECTS=$(patsubst %.cpp, %.o, $(wildcard *.c))
+OBJECTS=$(patsubst %.cpp, %.o, $(wildcard *.cpp))
 
 default: $(TARGET)
 
 $(TARGET): $(OBJECTS)	
 	$(CC) $(OBJECTS) $(LINKER_OPTS) $(LIBS) -o $@
+
+%.o: %.cpp $(HEADERS)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@

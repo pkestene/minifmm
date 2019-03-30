@@ -11,12 +11,14 @@ TYPE get_l2_error(TYPE* estimate, TYPE* actual, size_t num_points, size_t lda_ex
     for (size_t i = 0; i < num_points; ++i)
     {       
         TYPE tmp_diff = TYPE_ZERO;
-        for (int d = 0; d < dim; ++d) tmp_diff += (estimate[d*lda_approx+i] - actual[d*lda_exact+i]) *
+        for (int d = 0; d < dim; ++d) 
+          tmp_diff += (estimate[d*lda_approx+i] - actual[d*lda_exact+i]) *
             (estimate[d*lda_approx+i] - actual[d*lda_exact+i]);
         diff += TYPE_ABS(tmp_diff);
 
         TYPE tmp_norm = TYPE_ZERO;
-        for (int d = 0; d < dim; ++d) tmp_norm += actual[d*lda_exact+i] * actual[d*lda_exact+i];
+        for (int d = 0; d < dim; ++d) 
+          tmp_norm += actual[d*lda_exact+i] * actual[d*lda_exact+i];
         norm += TYPE_ABS(tmp_norm); 
     }
     return TYPE_SQRT(diff/norm);

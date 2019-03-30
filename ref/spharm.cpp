@@ -73,7 +73,7 @@ void compute_spharm(t_fmm_params* params, TYPE base_r, TYPE mult_r, TYPE theta, 
     }
     twomm1 += TYPE_TWO;
     pmm *= u * twomm1;
-    Y_rn[S_IDX(m,m)] = factors[S_IDX(m,m)]*pmm*TYPE_CEXP(I*m*phi)*power_r;
+    Y_rn[S_IDX(m,m)] = factors[S_IDX(m,m)]*pmm*TYPE_CEXP(I*(m*phi))*power_r;
     Y_rn[S_IDX(m,-m)] = neg_pow_n(m)*TYPE_CONJ(Y_rn[S_IDX(m,m)]);
 }
 
@@ -158,7 +158,7 @@ void compute_spharm_deriv(t_fmm_params* params, TYPE base_r, TYPE mult_r, TYPE t
     }
     twomm1 += TYPE_TWO;
     pmm *= u_phase * twomm1;
-    TYPE_COMPLEX coeff = factors[S_IDX(m,m)]*TYPE_CEXP(I*m*phi)*power_r;
+    TYPE_COMPLEX coeff = factors[S_IDX(m,m)]*TYPE_CEXP(I*(m*phi))*power_r;
     Y_rn[S_IDX(m,m)] = coeff*pmm;
     Y_rn[S_IDX(m,-m)] = neg_pow_n(m)*TYPE_CONJ(Y_rn[S_IDX(m,m)]);
     TYPE dpnm = nmax * x * pmm * u_inv;

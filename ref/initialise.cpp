@@ -9,7 +9,7 @@
 #include "rng.h"
 #include "timer.h"
 
-    static inline
+static inline
 TYPE_COMPLEX ipow(int n)
 {
     TYPE_COMPLEX i;
@@ -84,10 +84,10 @@ void initialise(int argc, char** argv, t_fmm_params* params)
     
     precompute(params);
 
-    t_timer t;
-    start(&t);
+    Timer t;
+    t.start();
     build_tree(params);
-    stop(&t);
+    t.stop();
     printf("Built tree structure in %fs\n", t.elapsed); 
 
     params->theta2 = params->theta*params->theta;
