@@ -11,16 +11,16 @@ endif
 
 ARCH=native
 
-COMPILER_GNU=gcc
-COMPILER_INTEL=icc
-COMPILER_CLANG=clang
-COMPILER_CRAY=cc
+COMPILER_GNU=g++
+COMPILER_INTEL=icpc
+COMPILER_CLANG=clang++
+COMPILER_CRAY=CC
 CC=$(COMPILER_$(COMPILER))
 
-FLAGS_GNU = -O3 -std=gnu99 -Wall -march=$(ARCH)
-FLAGS_INTEL = -O3 -std=gnu99 -Wall -x$(ARCH)
+FLAGS_GNU = -O3 -Wall -march=$(ARCH)
+FLAGS_INTEL = -O3  -Wall -x$(ARCH)
 FLAGS_CRAY = -O3
-FLAGS_CLANG = -O3 -std=gnu99 -march=$(ARCH)
+FLAGS_CLANG = -O3 -march=$(ARCH)
 CFLAGS = $(FLAGS_$(COMPILER))
 
 LINKER_OPTS_GNU = -Wall
@@ -51,12 +51,12 @@ REF_DIR=$(abspath $(shell pwd)/../ref)
 CFLAGS += -I $(REF_DIR)
 
 HEADERS=$(wildcard $(REF_DIR)/*.h)
-REF_SRCS=$(wildcard $(REF_DIR)/*.c)
-DIFF_SRCS=$(wildcard *.c)
+REF_SRCS=$(wildcard $(REF_DIR)/*.cpp)
+DIFF_SRCS=$(wildcard *.cpp)
 
 SRCS = $(addprefix $(REF_DIR)/, $(filter-out $(DIFF_SRCS), $(notdir $(REF_SRCS))))
 SRCS += $(DIFF_SRCS)
-OBJS = $(patsubst %.c,%.o,$(SRCS))
+OBJS = $(patsubst %.cpp,%.o,$(SRCS))
 
 default: $(TARGET)
 
@@ -65,7 +65,7 @@ print-%  : ; @echo $* = $($*)
 $(TARGET): $(OBJS)
 	$(CC) $(OBJS) $(LINKER_OPTS) $(LIBS) -o $@
 
-%.o: %.c $(HEADERS)
+%.o: %.cpp $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

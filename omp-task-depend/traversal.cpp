@@ -74,8 +74,8 @@ void calc_local_expansions(t_fmm_params* params)
 
 void perform_fmm(t_fmm_params* params)
 {
-    t_timer timer; 
-    start(&timer);
+    Timer timer; 
+    timer.start();
 
     #pragma omp parallel
     #pragma omp single
@@ -85,7 +85,7 @@ void perform_fmm(t_fmm_params* params)
         calc_local_expansions(params);
     }
     
-    stop(&timer);
+    timer.stop();
     printf("Performed all tree passes in %fs\n", timer.elapsed);
 }
 
