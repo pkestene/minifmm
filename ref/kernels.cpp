@@ -292,7 +292,7 @@ void l2p(t_fmm_params* params, t_node* node)
             phisum += (TYPE)m*std::real(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]*I);
             for (int m = 1; m <= n; ++m)
             {
-                // TODO change std::real, cimag functions to type agnostic
+                // TODO change creal, cimag functions to type agnostic
                 pot         += 2.0*std::real(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]);
                 rsum        += 2.0*(TYPE)n*std::real(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]);
                 thetasum    += 2.0*std::real(node->L[S_IDX(n,m)]*inner_deriv[S_IDX(n,m)]);

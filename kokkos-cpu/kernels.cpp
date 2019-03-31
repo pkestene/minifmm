@@ -8,7 +8,7 @@
 #include "kernels.h"
 #include "spharm.h"
 
-    static inline
+static inline
 void cart_to_sph(TYPE x, TYPE y, TYPE z, TYPE* pr, TYPE* ptheta, TYPE* pphi)
 {
     *pr = TYPE_SQRT(x*x+y*y+z*z);
@@ -16,7 +16,7 @@ void cart_to_sph(TYPE x, TYPE y, TYPE z, TYPE* pr, TYPE* ptheta, TYPE* pphi)
     *pphi = TYPE_ATAN2(y, x);
 }
 
-    static inline
+static inline
 void sph_to_cart(TYPE r, TYPE theta, TYPE phi, TYPE*x, TYPE* y, TYPE* z)
 {
     *x = r*TYPE_SIN(theta)*TYPE_COS(phi);
@@ -24,7 +24,7 @@ void sph_to_cart(TYPE r, TYPE theta, TYPE phi, TYPE*x, TYPE* y, TYPE* z)
     *z = r*TYPE_COS(theta);
 }
 
-    static inline
+static inline
 void sph_unit_to_cart_unit(TYPE r, TYPE theta, TYPE phi, TYPE grad_r, TYPE grad_theta, TYPE grad_phi,
         TYPE* x, TYPE* y, TYPE* z)
 {
@@ -34,7 +34,7 @@ void sph_unit_to_cart_unit(TYPE r, TYPE theta, TYPE phi, TYPE grad_r, TYPE grad_
 }
 
 // computes I^n
-    static inline
+static inline
 TYPE_COMPLEX ipow(int n)
 {
     TYPE_COMPLEX i;
@@ -202,10 +202,10 @@ void m2m(t_fmm_params* params, t_node* parent)
         }
     }
 }
-int m2l_calls = 0;
+//int m2l_calls = 0;
 void m2l(t_fmm_params* params, t_node* target, t_node* source)
 {
-    m2l_calls++;
+    //m2l_calls++;
     int num_terms = params->num_terms;
     
     TYPE dx = target->center[0] - source->center[0];
@@ -232,9 +232,13 @@ void m2l(t_fmm_params* params, t_node* target, t_node* source)
             //#pragma omp atomic
             //target->L[S_IDX(j,k)] += l_tmp;
             #pragma omp atomic
-            ((TYPE*)&target->L[S_IDX(j,k)])[0] += std::real(l_tmp);
+            reinterpret_cast<TYPE(&)[2]>(target->L[S_IDX(j,k)])[0] += std::real(l_tmp);
+            //((TYPE*)&target->L[S_IDX(j,k)])[0] += std::real(l_tmp);
+                        
             #pragma omp atomic
-            ((TYPE*)&target->L[S_IDX(j,k)])[1] += std::imag(l_tmp);
+            reinterpret_cast<TYPE(&)[2]>(target->L[S_IDX(j,k)])[1] += std::imag(l_tmp);
+            
+            //((TYPE*)&target->L[S_IDX(j,k)])[1] += std::imag(l_tmp);
         }
     }
 }
