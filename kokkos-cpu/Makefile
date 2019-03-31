@@ -56,19 +56,19 @@ CFLAGS += -I $(REF_DIR)
 
 HEADERS=$(wildcard $(REF_DIR)/*.h)
 HEADERS+=$(wildcard *.hpp)
-REF_SRCS=$(wildcard $(REF_DIR)/*.c)
-DIFF_SRCS=$(wildcard *.c)
+REF_SRCS=$(wildcard $(REF_DIR)/*.cpp)
+DIFF_SRCS=$(wildcard *.cpp)
 
 SRCS = $(addprefix $(REF_DIR)/, $(filter-out $(DIFF_SRCS), $(notdir $(REF_SRCS))))
 SRCS += $(DIFF_SRCS)
-OBJS = $(patsubst %.c,%.o,$(SRCS))
+OBJS = $(patsubst %.cpp,%.o,$(SRCS))
 
 print-%  : ; @echo $* = $($*)
 
 $(EXE): $(OBJS)
 	$(CC) $(OBJS) $(LINKER_OPTS) $(LIBS) -o $@
 
-%.o: %.c $(HEADERS)
+%.o: %.cpp $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

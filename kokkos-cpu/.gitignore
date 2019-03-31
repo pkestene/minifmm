@@ -1,1 +1,4 @@
 build_*
+KokkosCore_config.h
+KokkosCore_config.tmp
+
