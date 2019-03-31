@@ -23,7 +23,7 @@ $(info $(target_help))
 TARGET=CPU
 endif
 
-ARCH=sm_60
+ARCH=sm_30
 
 COMPILER_GNU=g++
 COMPILER_INTEL=icpc
