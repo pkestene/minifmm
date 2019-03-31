@@ -232,9 +232,9 @@ void m2l(t_fmm_params* params, t_node* target, t_node* source)
             //#pragma omp atomic
             //target->L[S_IDX(j,k)] += l_tmp;
             #pragma omp atomic
-            ((TYPE*)&target->L[S_IDX(j,k)])[0] += creal(l_tmp);
+            ((TYPE*)&target->L[S_IDX(j,k)])[0] += std::real(l_tmp);
             #pragma omp atomic
-            ((TYPE*)&target->L[S_IDX(j,k)])[1] += cimag(l_tmp);
+            ((TYPE*)&target->L[S_IDX(j,k)])[1] += std::imag(l_tmp);
         }
     }
 }
@@ -296,17 +296,17 @@ void l2p(t_fmm_params* params, t_node* node)
         for (int n = 0; n < num_terms; ++n)
         {
             int m = 0;
-            pot += creal(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]);
-            rsum += (TYPE)n*creal(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]);
-            thetasum += creal(node->L[S_IDX(n,m)]*inner_deriv[S_IDX(n,m)]);
-            phisum += (TYPE)m*creal(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]*I);
+            pot += std::real(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]);
+            rsum += (TYPE)n*std::real(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]);
+            thetasum += std::real(node->L[S_IDX(n,m)]*inner_deriv[S_IDX(n,m)]);
+            phisum += (TYPE)m*std::real(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]*I);
             for (int m = 1; m <= n; ++m)
             {
                 // TODO change creal, cimag functions to type agnostic
-                pot         += 2.0*creal(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]);
-                rsum        += 2.0*(TYPE)n*creal(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]);
-                thetasum    += 2.0*creal(node->L[S_IDX(n,m)]*inner_deriv[S_IDX(n,m)]);
-                phisum      += 2.0*(TYPE)m*creal(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]*I);
+                pot         += 2.0*std::real(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]);
+                rsum        += 2.0*(TYPE)n*std::real(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]);
+                thetasum    += 2.0*std::real(node->L[S_IDX(n,m)]*inner_deriv[S_IDX(n,m)]);
+                phisum      += 2.0*(TYPE)m*std::real(node->L[S_IDX(n,m)]*inner[S_IDX(n,m)]*I);
             }
         }
         TYPE inv_r = TYPE_ONE/r;
@@ -347,16 +347,16 @@ void m2p(t_fmm_params* params, t_node* target, t_node* source)
         for (int n = 0; n < num_terms; ++n)
         {
             int m = 0;
-            pot         += creal(outer[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
-            rsum        += (TYPE)-(n+1)*creal(outer[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
-            thetasum    += creal(outer_deriv[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
-            phisum      += (TYPE)m*creal(outer[S_IDX(n,-m)]*I*source->M[S_IDX(n,m)]);
+            pot         += std::real(outer[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
+            rsum        += (TYPE)-(n+1)*std::real(outer[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
+            thetasum    += std::real(outer_deriv[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
+            phisum      += (TYPE)m*std::real(outer[S_IDX(n,-m)]*I*source->M[S_IDX(n,m)]);
             for (m = 1; m <= n; ++m)
             {
-                pot         += 2.0*creal(outer[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
-                rsum        += 2.0*(TYPE)-(n+1)*creal(outer[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
-                thetasum    += 2.0*creal(outer_deriv[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
-                phisum      += 2.0*(TYPE)m*creal(outer[S_IDX(n,-m)]*I*source->M[S_IDX(n,m)]);
+                pot         += 2.0*std::real(outer[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
+                rsum        += 2.0*(TYPE)-(n+1)*std::real(outer[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
+                thetasum    += 2.0*std::real(outer_deriv[S_IDX(n,-m)]*source->M[S_IDX(n,m)]);
+                phisum      += 2.0*(TYPE)m*std::real(outer[S_IDX(n,-m)]*I*source->M[S_IDX(n,m)]);
             }
         }
         rsum *= TYPE_ONE/r;
