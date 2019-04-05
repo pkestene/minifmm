@@ -21,7 +21,7 @@ $(info $(target_help))
 TARGET=CPU
 endif
 
-ARCH=native
+#ARCH=native
 
 #COMPILER_GNU=g++
 #COMPILER_INTEL=icpc
@@ -35,13 +35,13 @@ ARCH=native
 #LINKER_OPTS_INTEL = -Wall
 #LINKER_OPTS = $(LINKER_OPTS_$(COMPILER))
 
-ARCH=sm_60
+ARCH?=sm_60
 
 CC=nvcc
 CFLAGS += -arch=$(ARCH) -O3 -x cu -std=c++11 -dc --use_fast_math
 
 EXE=fmm
-TYPE=DOUBLE
+TYPE=SINGLE
 
 ifeq ($(TYPE), DOUBLE)
 	CFLAGS += -DUSE_DOUBLE
