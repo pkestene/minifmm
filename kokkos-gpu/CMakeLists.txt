@@ -1,14 +1,14 @@
 cmake_minimum_required(VERSION 3.3)
 
-project(fmm-cpu C CXX)
+project(fmm-kokkos-gpu C CXX)
 
 # C++11 is for Kokkos
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-option (USE_DOUBLE "build with double precision" ON)
-if (USE_DOUBLE)
-  set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSE_DOUBLE" )
+option (USE_FLOAT "build with single precision" ON)
+if (USE_FLOAT)
+  set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSE_FLOAT" )
 endif()
 
 #

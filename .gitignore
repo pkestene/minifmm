@@ -38,3 +38,5 @@ fmm-*
 
 *.pbs
 .ccls-cache
+kokkos-gpu/build*
+kokkos-cpu/build*
